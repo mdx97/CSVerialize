@@ -1,0 +1,6 @@
+D:\Workspace\VS Projects\CSVerialize\bin\Debug\CSVerialize.dll
+D:\Workspace\VS Projects\CSVerialize\bin\Debug\CSVerialize.pdb
+D:\Workspace\VS Projects\CSVerialize\obj\Debug\CSVerialize.csprojAssemblyReference.cache
+D:\Workspace\VS Projects\CSVerialize\obj\Debug\CSVerialize.csproj.CoreCompileInputs.cache
+D:\Workspace\VS Projects\CSVerialize\obj\Debug\CSVerialize.dll
+D:\Workspace\VS Projects\CSVerialize\obj\Debug\CSVerialize.pdb
