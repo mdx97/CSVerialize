@@ -23,7 +23,7 @@ namespace CSVerialize.IO
 
             using (var reader = new StreamReader(Path))
             {
-                string[] columnHeaders = reader.ReadLine().Split(',');
+                string[] columnHeaders = reader.ReadLine().Split(Constants.Delimiter);
 
                 foreach (string header in columnHeaders)
                 {
@@ -32,7 +32,7 @@ namespace CSVerialize.IO
 
                 while (!reader.EndOfStream)
                 {
-                    string[] lineValues = reader.ReadLine().Split(',');
+                    string[] lineValues = reader.ReadLine().Split(Constants.Delimiter);
                     DataRow dr = dt.NewRow();
 
                     for (int i = 0; i < lineValues.Length; i++)

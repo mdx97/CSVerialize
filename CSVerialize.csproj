@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SerializationException.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Exceptions\SerializationException.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="IO\SpreadsheetSynchronizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -29,7 +29,7 @@ namespace CSVerialize.IO
 
                     if (i != 0)
                     {
-                        columnHeadersString += ",";
+                        columnHeadersString += Constants.Delimiter;
                     }
 
                     columnHeadersString += columnHeaderName;
@@ -45,7 +45,7 @@ namespace CSVerialize.IO
                     {
                         if (i != 0)
                         {
-                            rowString += ",";
+                            rowString += Constants.Delimiter;
                         }
 
                         rowString += dataRow.ItemArray[i].ToString();
