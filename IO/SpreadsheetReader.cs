@@ -33,14 +33,22 @@ namespace CSVerialize.IO
                 while (!reader.EndOfStream)
                 {
                     string[] lineValues = reader.ReadLine().Split(Constants.Delimiter);
-                    DataRow dr = dt.NewRow();
 
-                    for (int i = 0; i < lineValues.Length; i++)
+                    if (lineValues.Length == dt.Columns.Count)
                     {
-                        dr[i] = lineValues[i];
-                    }
+                        DataRow dr = dt.NewRow();
 
-                    dt.Rows.Add(dr);
+                        for (int i = 0; i < lineValues.Length; i++)
+                        {
+                            dr[i] = lineValues[i];
+                        }
+
+                        dt.Rows.Add(dr);
+                    }
+                    else
+                    {
+                        // This row does not have the correct amount of values.
+                    }
                 }
             }
 

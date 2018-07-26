@@ -12,14 +12,32 @@ namespace CSVerialize
 {
     public class Methods
     {
-        public static List<object> DeSerialize(SpreadsheetSynchronizer spreadsheet, Type type)
+        private static Dictionary<string, SpreadsheetSynchronizer> Spreadsheets = new Dictionary<string, SpreadsheetSynchronizer>();
+
+        private static SpreadsheetSynchronizer GetSpreadsheetSynchronizerForPath(string path)
         {
+            if (Spreadsheets.ContainsKey(path))
+            {
+                return Spreadsheets[path];
+            }
+            else
+            {
+                SpreadsheetSynchronizer synchronizer = new SpreadsheetSynchronizer(path);
+                Spreadsheets.Add(path, synchronizer);
+
+                return synchronizer;
+            }
+        }
+
+        public static List<object> DeSerialize(string path, Type type)
+        {
+            SpreadsheetSynchronizer synchronizer = GetSpreadsheetSynchronizerForPath(path);
             List<object> objectList = new List<object>();
 
-            foreach (DataRow dr in spreadsheet.Table.Rows)
+            foreach (DataRow dr in synchronizer.Table.Rows)
             {
                 object obj = Activator.CreateInstance(type);
-                
+
                 foreach (DataColumn column in dr.Table.Columns)
                 {
                     string columnName = column.ColumnName;
@@ -41,9 +59,10 @@ namespace CSVerialize
             return objectList;
         }
 
-        public static void Serialize(SpreadsheetSynchronizer spreadsheet, List<object> objectList)
+        public static void Serialize(string path, List<object> objectList)
         {
-            DataTable table = spreadsheet.Table;
+            SpreadsheetSynchronizer synchronizer = GetSpreadsheetSynchronizerForPath(path);
+            DataTable table = synchronizer.Table;
             table.Rows.Clear();
 
             foreach (object obj in objectList)
@@ -67,7 +86,7 @@ namespace CSVerialize
                 table.Rows.Add(dr);
             }
 
-            spreadsheet.Table = table;
+            synchronizer.Table = table;
         }
     }
 }
