@@ -5,12 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CSVerialize.IO;
 
 namespace CSVerialize
 {
     public class Methods
     {
-        public static List<object> DeSerialize(Spreadsheet spreadsheet, Type type)
+        public static List<object> DeSerialize(SpreadsheetSynchronizer spreadsheet, Type type)
         {
             List<object> objectList = new List<object>();
 
@@ -39,7 +40,7 @@ namespace CSVerialize
             return objectList;
         }
 
-        public static void Serialize(Spreadsheet spreadsheet, List<object> objectList)
+        public static void Serialize(SpreadsheetSynchronizer spreadsheet, List<object> objectList)
         {
             DataTable table = spreadsheet.Table;
             table.Rows.Clear();
