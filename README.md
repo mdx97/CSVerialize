@@ -48,8 +48,9 @@ The resulting spreadsheet will be in this format:
 
 We will use the same Student class from above to demonstrate De-Serialization.
 
-The DeSerialize method returns a `List<object>`.
+The DeSerialize method returns a `List<object>`. The spreadsheet must be in the same format as demonstrated above. The top row being property names, with each following row representing an instance.
 
 ```c#
 List<object> students = CSVerialize.Methods.DeSerialize(@"D:\TestSpreadsheet.csv", typeof(Student));
 ```
+
