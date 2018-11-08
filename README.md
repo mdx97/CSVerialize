@@ -46,4 +46,10 @@ The resulting spreadsheet will be in this format:
 #
 ### <span style="color:#04f772">De-Serialization</span>
 
-ToDo.
+We will use the same Student class from above to demonstrate De-Serialization.
+
+The DeSerialize method returns a `List<object>`.
+
+```c#
+List<object> students = CSVerialize.Methods.DeSerialize(@"D:\TestSpreadsheet.csv", typeof(Student));
+```
