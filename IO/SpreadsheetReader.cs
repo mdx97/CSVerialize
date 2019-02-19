@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSVerialize.Exceptions;
 
 namespace CSVerialize.IO
 {
@@ -38,7 +39,7 @@ namespace CSVerialize.IO
                     }
                     else
                     {
-                        // This row does not have the correct amount of values.
+                        throw new InvalidSpreadsheetException($"Spreadsheet '{Path}' is not properly formatted!");
                     }
                 }
             }
