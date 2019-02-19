@@ -22,16 +22,11 @@ namespace CSVerialize.IO
             using (var writer = new StreamWriter(Path))
             {
                 string columnHeadersString = "";
-
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
                     string columnHeaderName = dt.Columns[i].ColumnName;
-
                     if (i != 0)
-                    {
                         columnHeadersString += Constants.Delimiter;
-                    }
-
                     columnHeadersString += columnHeaderName;
                 }
 
@@ -40,17 +35,12 @@ namespace CSVerialize.IO
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     string rowString = "";
-
                     for (int i = 0; i < dataRow.ItemArray.Length; i++)
                     {
-                        if (i != 0)
-                        {
+                        if (i != 0) 
                             rowString += Constants.Delimiter;
-                        }
-
                         rowString += dataRow.ItemArray[i].ToString();
                     }
-
                     writer.WriteLine(rowString);
                 }
             }
