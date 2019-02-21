@@ -30,14 +30,14 @@ namespace CSVerialize.IO
             return dt;
         }
 
-        private void ReadHeaders(ref StreamReader reader, ref DataTable dt)
+        private static void ReadHeaders(ref StreamReader reader, ref DataTable dt)
         {
             string[] columnHeaders = reader.ReadLine().Split(Constants.Delimiter);
             foreach (var header in columnHeaders)
                 dt.Columns.Add(header);
         }
 
-        private void ReadRow(ref StreamReader reader, ref DataTable dt)
+        private static void ReadRow(ref StreamReader reader, ref DataTable dt)
         {
             var dr = dt.NewRow();
             string[] lineValues = reader.ReadLine().Split(Constants.Delimiter);

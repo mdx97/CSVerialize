@@ -27,7 +27,7 @@ namespace CSVerialize.IO
             }
         }
 
-        private void WriteHeaders(DataTable dt, ref StreamWriter writer)
+        private static void WriteHeaders(DataTable dt, ref StreamWriter writer)
         {
             var columnHeadersString = "";
             for (int i = 0; i < dt.Columns.Count; i++)
@@ -40,7 +40,7 @@ namespace CSVerialize.IO
             writer.WriteLine(columnHeadersString);
         }
 
-        private void WriteRow(DataRow dr, ref StreamWriter writer)
+        private static void WriteRow(DataRow dr, ref StreamWriter writer)
         {
             var rowString = "";
             for (int i = 0; i < dr.ItemArray.Length; i++)
