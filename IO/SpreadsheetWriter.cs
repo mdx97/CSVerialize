@@ -19,6 +19,16 @@ namespace CSVerialize.IO
 
         public void Write(DataTable dt)
         {
+            using (var writer = new StreamWriter(Path))
+            {
+                WriteHeaders(dt, writer);
+                foreach (var dataRow in dt.Rows)
+                    WriteRow(dr, writer);
+            }
+        }
+
+        private void WriteHeaders(DataTable dt, ref StreamWriter writer)
+        {
             var columnHeadersString = "";
             for (int i = 0; i < dt.Columns.Count; i++)
             {
@@ -27,21 +37,19 @@ namespace CSVerialize.IO
                     columnHeadersString += Constants.Delimiter;
                 columnHeadersString += columnHeaderName;
             }
-            using (var writer = new StreamWriter(Path))
+            writer.WriteLine(columnHeadersString);
+        }
+
+        private void WriteRow(DataRow dr, ref StreamWriter writer)
+        {
+            var rowString = "";
+            for (int i = 0; i < dr.ItemArray.Length; i++)
             {
-                writer.WriteLine(columnHeadersString);
-                foreach (var dataRow in dt.Rows)
-                {
-                    var rowString = "";
-                    for (int i = 0; i < dataRow.ItemArray.Length; i++)
-                    {
-                        if (i != 0) 
-                            rowString += Constants.Delimiter;
-                        rowString += dataRow.ItemArray[i].ToString();
-                    }
-                    writer.WriteLine(rowString);
-                }
+                if (i != 0) 
+                    rowString += Constants.Delimiter;
+                rowString += dr.ItemArray[i].ToString();
             }
+            writer.WriteLine(rowString);
         }
     }
 }

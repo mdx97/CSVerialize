@@ -23,27 +23,29 @@ namespace CSVerialize.IO
             var dt = new DataTable();
             using (var reader = new StreamReader(Path))
             {
-                string[] columnHeaders = reader.ReadLine().Split(Constants.Delimiter);
-                foreach (var header in columnHeaders)
-                    dt.Columns.Add(header);
-                    
+                ReadHeaders(reader, dt);
                 while (!reader.EndOfStream)
-                {
-                    string[] lineValues = reader.ReadLine().Split(Constants.Delimiter);
-                    if (lineValues.Length == dt.Columns.Count)
-                    {
-                        var dr = dt.NewRow();
-                        for (int i = 0; i < lineValues.Length; i++)
-                            dr[i] = lineValues[i];
-                        dt.Rows.Add(dr);
-                    }
-                    else
-                    {
-                        throw new InvalidSpreadsheetException($"Spreadsheet '{Path}' is not properly formatted!");
-                    }
-                }
+                    ReadRow(reader, dr);
             }
             return dt;
+        }
+
+        private void ReadHeaders(ref StreamReader reader, ref DataTable dt)
+        {
+            string[] columnHeaders = reader.ReadLine().Split(Constants.Delimiter);
+            foreach (var header in columnHeaders)
+                dt.Columns.Add(header);
+        }
+
+        private void ReadRow(ref StreamReader reader, ref DataTable dt)
+        {
+            var dr = dt.NewRow();
+            string[] lineValues = reader.ReadLine().Split(Constants.Delimiter);
+            if (lineValues.Length != dt.Columns.Count)
+                throw new InvalidSpreadsheetException($"Spreadsheet '{Path}' is not properly formatted!");
+            for (int i = 0; i < lineValues.Length; i++)
+                dr[i] = lineValues[i];
+            dt.Rows.Add(dr);
         }
     }
 }
