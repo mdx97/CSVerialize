@@ -20,19 +20,19 @@ namespace CSVerialize.IO
 
         public DataTable Read()
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             using (var reader = new StreamReader(Path))
             {
                 string[] columnHeaders = reader.ReadLine().Split(Constants.Delimiter);
-                foreach (string header in columnHeaders)
+                foreach (var header in columnHeaders)
                     dt.Columns.Add(header);
-
+                    
                 while (!reader.EndOfStream)
                 {
                     string[] lineValues = reader.ReadLine().Split(Constants.Delimiter);
                     if (lineValues.Length == dt.Columns.Count)
                     {
-                        DataRow dr = dt.NewRow();
+                        var dr = dt.NewRow();
                         for (int i = 0; i < lineValues.Length; i++)
                             dr[i] = lineValues[i];
                         dt.Rows.Add(dr);
@@ -43,7 +43,6 @@ namespace CSVerialize.IO
                     }
                 }
             }
-
             return dt;
         }
     }

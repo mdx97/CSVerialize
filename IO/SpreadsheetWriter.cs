@@ -19,22 +19,20 @@ namespace CSVerialize.IO
 
         public void Write(DataTable dt)
         {
+            var columnHeadersString = "";
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                var columnHeaderName = dt.Columns[i].ColumnName;
+                if (i != 0)
+                    columnHeadersString += Constants.Delimiter;
+                columnHeadersString += columnHeaderName;
+            }
             using (var writer = new StreamWriter(Path))
             {
-                string columnHeadersString = "";
-                for (int i = 0; i < dt.Columns.Count; i++)
-                {
-                    string columnHeaderName = dt.Columns[i].ColumnName;
-                    if (i != 0)
-                        columnHeadersString += Constants.Delimiter;
-                    columnHeadersString += columnHeaderName;
-                }
-
                 writer.WriteLine(columnHeadersString);
-
-                foreach (DataRow dataRow in dt.Rows)
+                foreach (var dataRow in dt.Rows)
                 {
-                    string rowString = "";
+                    var rowString = "";
                     for (int i = 0; i < dataRow.ItemArray.Length; i++)
                     {
                         if (i != 0) 

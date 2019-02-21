@@ -22,7 +22,7 @@ namespace CSVerialize
             }
             else
             {
-                SpreadsheetSynchronizer synchronizer = new SpreadsheetSynchronizer(path);
+                var synchronizer = new SpreadsheetSynchronizer(path);
                 Spreadsheets.Add(path, synchronizer);
                 return synchronizer;
             }
@@ -30,44 +30,53 @@ namespace CSVerialize
 
         public static List<object> DeSerialize(string path, Type type)
         {
-            SpreadsheetSynchronizer synchronizer = GetSpreadsheetSynchronizerForPath(path);
-            List<object> objectList = new List<object>();
-            foreach (DataRow dr in synchronizer.Table.Rows)
+            var synchronizer = GetSpreadsheetSynchronizerForPath(path);
+            var objectList = new List<object>();
+            foreach (var dr in synchronizer.Table.Rows)
             {
-                object obj = Activator.CreateInstance(type);
-                foreach (DataColumn column in dr.Table.Columns)
-                {
-                    string columnName = column.ColumnName;
-                    PropertyInfo property = type.GetProperty(columnName);
-                    if (property != null)
-                        property.SetValue(obj, dr[columnName], null);
-                    else
-                        throw new SerializationException($"Column '{columnName}' does not represent a property in Type '{type}'");
-                }
+                var obj = DeSerializeRow(dr, type);
                 objectList.Add(obj);
             }
             return objectList;
         }
 
+        private static object DeSerializeRow(DataRow dr, Type type)
+        {
+            var obj = Activator.CreateInstance(type);
+            foreach (var column in dr.Table.Columns)
+            {
+                var columnName = column.ColumnName;
+                var propertyInfo = type.GetProperty(columnName);
+                if (propertyInfo == null)
+                    throw new SerializationException($"Column '{columnName}' does not represent a property in Type '{type}'");
+                propertyInfo.SetValue(obj, dr[columnName], null);
+            }
+            return obj;
+        }
+        
         public static void Serialize(string path, List<object> objectList)
         {
-            SpreadsheetSynchronizer synchronizer = GetSpreadsheetSynchronizerForPath(path);
-            DataTable table = synchronizer.Table;
+            var synchronizer = GetSpreadsheetSynchronizerForPath(path);
+            var table = synchronizer.Table;
             table.Rows.Clear();
             foreach (object obj in objectList)
             {
-                DataRow dr = table.NewRow();
-                foreach (PropertyInfo property in obj.GetType().GetProperties())
-                {
-                    string propertyName = property.Name;
-                    if (table.Columns.Contains(propertyName))
-                        dr[propertyName] = property.GetValue(obj);
-                    else
-                        throw new SerializationException($"Property '{propertyName}' does not represent a column in the spreadsheet.");
-                }
+                var dr = table.NewRow();
+                SerializeObject(obj, dr);
                 table.Rows.Add(dr);
             }
             synchronizer.Table = table;
+        }
+
+        private static void SerializeObject(object obj, ref DataRow dr)
+        {
+            foreach (var property in obj.GetType().GetProperties())
+            {
+                var propertyName = property.Name;
+                if (!table.Columns.Contains(propertyName))
+                    throw new SerializationException($"Property '{propertyName}' does not represent a column in the spreadsheet.");
+                dr[propertyName] = property.GetValue(obj);
+            }
         }
     }
 }
