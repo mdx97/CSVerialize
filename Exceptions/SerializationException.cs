@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace CSVerialize.Exceptions
 {
-    public class SerializationException : Exception
-    {
-        public string ErrorMessage { get; set; }
+	public class SerializationException : Exception
+	{
+		public string ErrorMessage { get; set; }
 
-        public SerializationException(string message)
-        {
-            ErrorMessage = message;
-        }
-    }
+		/// <summary>
+		/// Creates an instance of the <see cref="SerializationException"/> class.
+		/// </summary>
+		/// <param name="message">The error message.</param>
+		public SerializationException(string message)
+		{
+			ErrorMessage = message;
+		}
+	}
 }

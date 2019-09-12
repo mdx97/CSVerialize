@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace CSVerialize
 {
-    internal class Constants
-    {
-        public static char Delimiter = ',';
-    }
+	/// <summary>
+	/// Contains all internal constants for the library.
+	/// </summary>
+	internal class Constants
+	{
+		public static char Delimiter = ',';
+	}
 }

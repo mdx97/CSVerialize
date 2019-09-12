@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace CSVerialize.Exceptions
 {
-    public class InvalidSpreadsheetException : Exception
-    {
-        public string ErrorMessage { get; set; }
+	public class InvalidSpreadsheetException : Exception
+	{
+		public string ErrorMessage { get; set; }
 
-        public InvalidSpreadsheetException(string message)
-        {
-            ErrorMessage = message;
-        }
-    }
+		/// <summary>
+		/// Creates an instance of the <see cref="InvalidSpreadsheetException"/> class.
+		/// </summary>
+		/// <param name="message">The error message.</param>
+		public InvalidSpreadsheetException(string message)
+		{
+			ErrorMessage = message;
+		}
+	}
 }
